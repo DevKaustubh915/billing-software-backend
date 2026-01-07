@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+##remove properties file from tracking #####
+src/main/resources/application.properties

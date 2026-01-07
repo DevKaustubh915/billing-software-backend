@@ -1,5 +1,6 @@
 package com.kaustubh.billingsoftware.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kaustubh.billingsoftware.io.CategoryRequest;
 import com.kaustubh.billingsoftware.io.CategoryResponse;
 import com.kaustubh.billingsoftware.service.CategoryService;
@@ -15,34 +16,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public CategoryResponse addCategory(@RequestBody CategoryRequest request ){
+//        return categoryService.add(request);
+//    }
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponse addCategory(@RequestBody CategoryRequest request ){
-        return categoryService.add(request);
-    }
-
-    /***
-    //@PostMapping
-    //@ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse addCategory(@RequestPart("category") String categoryString,
-    //                                    @RequestPart("file")MultipartFile file){
+                                        @RequestPart("file")MultipartFile file){
         ObjectMapper objectMapper = new ObjectMapper();
         CategoryRequest request = null;
-        try {
-            request = objectMapper.readValue(categoryString,CategoryRequest.class);
-            return categoryService.add(request, file);
-        }catch (JsonProcessingException ex){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Exception occured while parsity the json: "+ex.getMessage());
-
-        }
+        request = objectMapper.readValue(categoryString,CategoryRequest.class);
+        return categoryService.add(request, file);
 
     }
 
-     ***/
+
 
     @GetMapping
     public List<CategoryResponse> fetchCategories(){
