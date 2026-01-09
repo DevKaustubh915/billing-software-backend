@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthResponse {
 
     private String email;
-    private String password;
+    private String token;
     private String role;
 
 

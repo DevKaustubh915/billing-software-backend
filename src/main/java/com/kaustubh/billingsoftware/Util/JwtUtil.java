@@ -18,7 +18,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret.key}")
+    @Value("${jwt.secret.key")
     private String SECRET_KEY;
 
     public String generateToken(UserDetails userDetails){

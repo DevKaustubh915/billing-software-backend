@@ -38,7 +38,6 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login" , "/encode").permitAll()
-                        .requestMatchers("/api/v1.0/**").permitAll()
                         .requestMatchers("/category" , "/items").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
@@ -73,7 +72,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(appUserDetailService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(appUserDetailService);
         authProvider.setPasswordEncoder(passwordEncoder()); // 🔥 THIS WAS MISSING
         return new ProviderManager(authProvider);
     }
