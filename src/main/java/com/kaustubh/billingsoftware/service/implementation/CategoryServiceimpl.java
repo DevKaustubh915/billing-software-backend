@@ -4,6 +4,7 @@ import com.kaustubh.billingsoftware.entity.CategoryEntity;
 import com.kaustubh.billingsoftware.io.CategoryRequest;
 import com.kaustubh.billingsoftware.io.CategoryResponse;
 import com.kaustubh.billingsoftware.repository.CategoryRepository;
+import com.kaustubh.billingsoftware.repository.ItemRepository;
 import com.kaustubh.billingsoftware.service.CategoryService;
 import com.kaustubh.billingsoftware.service.FileUploadService;
 import com.kaustubh.billingsoftware.service.FileUploadService;
@@ -21,6 +22,8 @@ public class CategoryServiceimpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
+
+    private ItemRepository itemRepository;
 
     @Override
     public CategoryResponse add(CategoryRequest request , MultipartFile file){
@@ -55,6 +58,9 @@ public class CategoryServiceimpl implements CategoryService {
 
 
     private CategoryResponse ConvertToResponse(CategoryEntity newCategory) {
+
+        Integer itemsCount = itemRepository.countByCategoryId(newCategory.getId());
+
         return CategoryResponse.builder()
                 .categoryId(newCategory.getCategoryId())
                 .name(newCategory.getName())
@@ -63,6 +69,7 @@ public class CategoryServiceimpl implements CategoryService {
                 .imgUrl(newCategory.getImgurl())
                 .createdAt(newCategory.getCreatedAt())
                 .updatedAt(newCategory.getUpdatedAt())
+                .items(itemsCount)
                 .build();
     }
 

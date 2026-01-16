@@ -1,24 +1,26 @@
 package com.kaustubh.billingsoftware.io;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
-public class CategoryResponse {
+@NoArgsConstructor
+public class ItemResponse {
 
-    private String categoryId;
+    private String itemId;
     private String name;
+    private BigDecimal price;
+    private String categoryId;
     private String description;
-    private String bgcolor;
+    private String categoryName;
+    private String imgUrl;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private String imgUrl;
-    private Integer items;
-
 }
